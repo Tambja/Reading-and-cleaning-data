@@ -25,6 +25,6 @@ run_analysis.R <- R script that does the following:
 
 summary_data.txt <- Tidy data of the final data set
 
-Codebook.md <- A code book that described the variables and the transformation to the data that I made. 
+Codebook.rmd <- A code book that described the variables and the transformation to the data that I made. 
 
 
