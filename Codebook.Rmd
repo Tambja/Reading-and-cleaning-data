@@ -1,0 +1,91 @@
+---
+title: "Codebook"
+author: "Hayley Jessup-Case"
+date: "29/11/2021"
+output: html_document
+---
+
+
+
+
+## Descriptions of variables used in **summary_data.txt**
+
+run_analysis.R prepares the run_data.zip to a clean format as required in the Coursera "Getting and Cleaning Data" peer graded assignment. 
+
+### 1. Assigning the data
+
+1. features <- UCI HAR Dataset/features.txt
+    + extracts "n, feature names"
+    + 561 obs. of  2 variables
+2. activities <- UCI HAR Dataset/activity_labels.txt"
+    + extracts "act_code, activity"
+    + 6 obs. of  2 variables
+3. subject_test <- UCI HAR Dataset/test/subject_test.txt
+    + extracts "subject_code"
+    + 2947 obs. of  1 variable
+4. x_test <- UCI HAR Dataset/test/X_test.txt
+    + extracts feature names of test data
+    + 2947 obs. of  561 variables
+5. y_test <- UCI HAR Dataset/test/y_test.txt
+    + extracts activity codes of test data
+    + 2947 obs. of  1 variable
+6. subject_train <- UCI HAR Dataset/train/subject_train.txt
+    + extracts "subject_code" from training data
+    + 7352 obs. of  1 variable
+7. x_train <- UCI HAR Dataset/train/X_train.txt
+    + extracts feature names of training data
+    + 7352 obs. of  561 variables
+8. y_train <- UCI HAR Dataset/train/y_train.txt
+    + extracts activity codes of training data
+    + 7352 obs. of  1 variable
+
+
+### 2. Merge the training and test sets, then merge the two subject tables toether, then combine all.  
+
+9. x_merged  <- merges features from train and test data sets using rbind 
+    + 10299 obs. of  561 variables
+10. y_merged <- merges activities from train and test data set using rbind
+    + 10299 obs. of  1 variable
+11. subject_merged <- merges subject_train and subject_test using rbind
+    + 10299 obs. of  1 variable
+12. all_merged <- merges subject_merged, x_merged, y_merged using rbind 
+    + 10299 obs. of  563 variables
+
+
+### 3. Extracts only the measurements on the mean and standard deviation for each measurement. 
+
+13. final_data <- extracts columns from all_merged
+    + selecting subject_code, act_code, and variables that contain mean and standard deviation of each measurement
+    + 10299 obs. of  88 variables
+                    
+              
+### 4. Uses descriptive activity names to name the activities in the data set
+
+14. final_data$act_code <- updated variable in final_data that represents the names of activities rather than a code  (from the activities variable)
+    
+
+### 5. Appropriately labels the data set with descriptive variable names. 
+
+
+**Final_data columns renamed:**
+    + Column 1 renamed to SubjectCode
+    + Column 2 renamed to Activity
+    + All names with Acc changed to Acceleometer
+    + All names with Gyro changed to Gyroscope
+    + All names with BodyBody changed to Body
+    + All names with Mag changed to Magnitude
+    + All names with the character ^t changed to Time
+    + All names with the character ^f changed to Frequency
+    + All names with tBody changed to TimeBody
+    + All names with -mean() changed to Mean 
+    + All names with -std() changed to STD
+    + All names with -freq() changed to Frequency
+    + All names with angle changed to Angle
+    + All names with gravity changed to Gravity
+
+
+### 6. From the data set in step 4, creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+
+15. summary_data <- summarises final_data with the means of the variables for each SubjectCode and Activity
+    + grouped_df [180 rows × 88 columns]
+
